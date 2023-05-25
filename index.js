@@ -33,9 +33,20 @@ app.post("/notification", async (req, res) => {
       'Authorization': 'key=' + serverKey
     };
 
-    const response = await axios.post(url, req.body, { headers: headers });
-    console.log('Response:', response.data);
-    res.sendStatus(200);
+    const data = {
+      notification: {
+        title,
+        body
+      },
+      to: deviceToken
+    };
+    const response = await axios.post(url, data, { headers: headers });
+    if(response.status == 200){
+      console.log('Response:', response.data);
+      console.log('Status:', response.status);
+    }
+    return response;
+    // res.sendStatus(200);
   } catch (error) {
     console.error('Error:', error);
     res.sendStatus(500);
