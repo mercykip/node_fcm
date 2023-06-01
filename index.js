@@ -1,8 +1,8 @@
 const express = require('express');
 
-const cors = require("cors");
 const bodyParser = require('body-parser');
 const axios = require('axios'); // Add axios import
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
@@ -10,7 +10,7 @@ app.use(cors()); // Add CORS middleware
 app.use(bodyParser.urlencoded({ extended: true })); // Add body-parser middleware
 
 const PORT = process.env.PORT || 8081;
-app.post("/", async (req, res) => {
+app.post("/notification", cors(), async (req, res) => {
     const { title, body, deviceToken } = req.body;
     let response = null;
 
