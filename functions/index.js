@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use(cors()); // Add CORS middleware
 app.use(bodyParser.urlencoded({ extended: true })); // Add body-parser middleware
-app.post("/notification", async (req, res) => {
+app.post("/", async (req, res) => {
   const { title, body, deviceToken } = req.body;
   let response = null;
 
@@ -41,14 +41,14 @@ app.post("/notification", async (req, res) => {
       },
       to: deviceToken
     };
-     response = await axios.post(url, data, { headers: headers });
-    if(response.status == 200){
+    response = await axios.post(url, data, { headers: headers });
+    if (response.status == 200) {
       console.log('Response:', response.data);
       console.log('Status:', response.status);
     }
     res.json(response.data);
     // res.sendStatus(200);
-  } 
+  }
   catch (error) {
     console.error('Error:', error);
     res.sendStatus(500);
@@ -57,6 +57,6 @@ app.post("/notification", async (req, res) => {
 
 });
 
-app.listen(3000, () => console.log("API server is running"));
+// app.listen(3000, () => console.log("API server is running"));
 app.use('/.netlify/functions/api', router);
-module.exports.handler =serverless(app);
+module.exports.handler = serverless(app);
